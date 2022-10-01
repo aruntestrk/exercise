@@ -27,19 +27,19 @@ public class BaseTest {
 		return this.driver.get();
 	}
 
-	@Parameters("browser")
+	//@Parameters("browser")
 	@BeforeMethod
-	public synchronized void startDriver(@Optional String browser) {
-		browser = System.getProperty("browser", browser);
+	public synchronized void startDriver() {
+        String	browser = System.getProperty("browser", "CHROME");
 		setDriver(DriverFactory.getWebDriver(DriverType.valueOf(browser)));
 		System.out.println("CURRENT THREAD: " + Thread.currentThread().getId() + ", " + "DRIVER = " + getDriver());
 	}
 
-	@Parameters("browser")
+	//@Parameters("browser")
 	@AfterMethod
-	public synchronized void quitDriver(@Optional String browser, ITestResult result)
+	public synchronized void quitDriver(ITestResult result)
 			throws InterruptedException, IOException {
-		Thread.sleep(300);
+		 String	browser = System.getProperty("browser", "CHROME");
 		System.out.println("CURRENT THREAD: " + Thread.currentThread().getId() + ", " + "DRIVER = " + getDriver());
 		if (result.getStatus() == ITestResult.FAILURE) {
 			File destFile = new File("scr" + File.separator + browser + File.separator
